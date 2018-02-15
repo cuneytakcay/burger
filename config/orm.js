@@ -1,6 +1,7 @@
+// Require connection module
 var connection = require("./connection.js");
 
-// Try to use callback function instead of console.log in here
+// Create orm to communicate with MySql database and pass required commands
 var orm = {
 	selectAll: function(table, cb) {
 		var queryString = 'SELECT * FROM ' + table;

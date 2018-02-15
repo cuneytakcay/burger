@@ -1,0 +1,41 @@
+html, body {
+    background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.4)), url('../img/burger-background.jpeg');
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+body {
+    font-size: 20px;
+    font-family: 'Kavivanar', cursive;
+}
+
+h1 { color: #fff; }
+
+ol { font-size: 80%; }
+
+#logo { margin: auto; }
+
+.form-div { margin-top: 20px; }
+
+.display-div {
+    height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 0.7;
+}
+
+#order-btn {
+    border-radius: 0;
+    font-size: 80%;
+    opacity: 0.8;
+}
+
+#order-btn:hover { opacity: 1; }
+
+@media only screen and (max-width: 768px) {
+    .display-div {
+        height: 150px;
+        overflow: auto;
+    }
+}

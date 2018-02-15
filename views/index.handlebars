@@ -1,35 +1,54 @@
-<h1>Burger Orders</h1>
-
-<ul>
-    {{#each burgers}} {{#unless devoured}}
-    <li>
-        <p>{{this.burger_name}}</p>
-
-        <button data-id="{{this.id}}" class="devour">Devour</button>
-    </li>
-    {{/unless}} {{/each}}
-</ul>
-<p>**********************************************************************</p>
-<ul>
-    {{#each burgers}} {{#if devoured}}
-    <li>
-        <p>{{this.id}}, {{this.burger_name}}, {{this.devoured}}</p>
-    </li>
-    {{/if}} {{/each}}
-</ul>
-
-<h2>Order Your Burger</h2>
-
-<form>
-    <div>
-        <label>Enter your order</label>
-        <input id="burger-input">
-        <button type="submit" id="insert">Submit</button>
+<!-- HEADER AND LOGO -->
+<div class=" row">
+    <div class="col-12 text-center mt-5">
+        <h1>Nefis Burger</h1>
+        <img src="{{root}}/assets/img/logo.png" id="logo">
     </div>
-</form>
+</div>
+<!-- FORM -->
+<div class="row form-div">
+    <div class="col-md-1 col-lg-2"></div>
+    <div class="col-12 col-md-10 col-lg-8">
+        <form class="input-group mb-4">
+            <input type="text" id="burger-input" class="p-2 form-control border border-dark" placeholder="Enter your order here.">
+            <input type="submit" id="order-btn" class="p-2 input-group-addon bg-success btn text-white rounded-right border border-dark" value="Submit your order">
+        </form>
+    </div>
+    <div class="col-md-1 col-lg-2"></div>
+</div>
+<!-- ORDER AND DEVOURED DISPLAY -->
+<div class="row">
+    <div class="col-lg-1"></div>
+    <!-- Burger orders displayed here -->
+    <div class="col-12 col-md-6 col-lg-5 bg-light p-3 rounded border border-dark display-div">
+        <ol>
+            {{#each burgers}} {{#unless devoured}}
+            <li>
+                <p class=" d-inline-block mb-3">{{this.burger_name}}</p>
 
+                <button data-id="{{this.id}}" class="devour btn btn-danger btn-sm float-right">Devour</button><hr>
+            </li>
+            {{/unless}} {{/each}}
+        </ol>
+    </div> 
+    <!-- Devoured orders displayed here --> 
+    <div class="col-12 col-md-6 col-lg-5 bg-light p-3 rounded border border-dark display-div">
+        <ol>
+            {{#each burgers}} {{#if devoured}}
+            <li>
+                <p class="text-secondary">{{this.burger_name}}</p><hr>
+            </li>
+            {{/if}} {{/each}}
+        </ol>
+    </div>
+
+    <div class="col-lg-1"></div>
+</div>
+
+<!-- SCRIPT FOR AJAX CALLS -->
 <script type="text/javascript">
-    $("#insert").on("click", function (event) {
+    // When order button clicked, new order displayed
+    $("#order-btn").on("click", function (event) {
     
         event.preventDefault();
 
@@ -40,19 +59,19 @@
         
         $('#burger-input').val('');
 
-        // Send the POST request.
+        // Send the POST request
         $.ajax('api/burgers', {
             type: 'POST',
             data: newOrder
         }).then(
             function () {
-                console.log('New order is added to the list...');
                 // Reload the page to get the updated list
                 location.reload()
             }
         );
     });
 
+    // When devour button clicked, order transfered to the devoured list
     $('.devour').on('click', function() {
         var id = $(this).data('id');
 
@@ -64,7 +83,7 @@
             type: 'PUT',
             data: devourState
         }).then(function() {
-            console.log('Burger is devoured...');
+            // Reload the page to get the updated list
             location.reload();
         });
     });

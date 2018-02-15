@@ -1,3 +1,3 @@
 # burger
 
-Photo by Artem Beliaikin from Pexels https://www.pexels.com/photo/advertisement-advertising-architecture-background-617230/
+Photo by Dana Tentis from Pexels https://www.pexels.com/photo/cooked-foods-750073/
