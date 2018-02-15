@@ -1,0 +1,71 @@
+<h1>Burger Orders</h1>
+
+<ul>
+    {{#each burgers}} {{#unless devoured}}
+    <li>
+        <p>{{this.burger_name}}</p>
+
+        <button data-id="{{this.id}}" class="devour">Devour</button>
+    </li>
+    {{/unless}} {{/each}}
+</ul>
+<p>**********************************************************************</p>
+<ul>
+    {{#each burgers}} {{#if devoured}}
+    <li>
+        <p>{{this.id}}, {{this.burger_name}}, {{this.devoured}}</p>
+    </li>
+    {{/if}} {{/each}}
+</ul>
+
+<h2>Order Your Burger</h2>
+
+<form>
+    <div>
+        <label>Enter your order</label>
+        <input id="burger-input">
+        <button type="submit" id="insert">Submit</button>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $("#insert").on("click", function (event) {
+    
+        event.preventDefault();
+
+        var newOrder = {
+            burger_name: $("#burger-input").val().trim(),
+            devoured: false
+        };
+        
+        $('#burger-input').val('');
+
+        // Send the POST request.
+        $.ajax('api/burgers', {
+            type: 'POST',
+            data: newOrder
+        }).then(
+            function () {
+                console.log('New order is added to the list...');
+                // Reload the page to get the updated list
+                location.reload()
+            }
+        );
+    });
+
+    $('.devour').on('click', function() {
+        var id = $(this).data('id');
+
+        var devourState = {
+            devoured: true
+        }
+
+        $.ajax('api/burgers/' + id, {
+            type: 'PUT',
+            data: devourState
+        }).then(function() {
+            console.log('Burger is devoured...');
+            location.reload();
+        });
+    });
+</script>
