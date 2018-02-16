@@ -47,28 +47,42 @@
 
 <!-- SCRIPT FOR AJAX CALLS -->
 <script type="text/javascript">
+    function validateForm() {
+                
+        var formIsValid = true;
+
+        if ($('#burger-input').val() === "") { 
+            formIsValid = false; 
+        }
+
+        return formIsValid;
+    }
     // When order button clicked, new order displayed
     $("#order-btn").on("click", function (event) {
     
         event.preventDefault();
 
-        var newOrder = {
-            burger_name: $("#burger-input").val().trim(),
-            devoured: false
-        };
-        
-        $('#burger-input').val('');
+        if (validateForm()) {
+            var newOrder = {
+                burger_name: $("#burger-input").val().trim(),
+                devoured: false
+            };
+            
+            $('#burger-input').val('');
 
-        // Send the POST request
-        $.ajax('api/burgers', {
-            type: 'POST',
-            data: newOrder
-        }).then(
-            function () {
-                // Reload the page to get the updated list
-                location.reload()
-            }
-        );
+            // Send the POST request
+            $.ajax('api/burgers', {
+                type: 'POST',
+                data: newOrder
+            }).then(
+                function () {
+                    // Reload the page to get the updated list
+                    location.reload();
+                }
+            );
+        } else {
+            alert('You need to enter your order first!');
+        }
     });
 
     // When devour button clicked, order transfered to the devoured list
